@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  openemr:
+    image: openemr/openemr:7.0.3
+    container_name: openemr
+    ports:
+      - "8080:80"
+      - "4443:443"
+    networks:
+      - openemr-net
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:9.4
+    container_name: some-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+    networks:
+      - openemr-net
+
+networks:
+  openemr-net:
+    driver: bridge
